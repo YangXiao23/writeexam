@@ -13,10 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.http.HttpRequest;
 import java.util.Collections;
@@ -37,7 +34,7 @@ public class AuthController {
     @Autowired
     private JWTUtil jwtUtil;
     @PostMapping("/login")
-    public CommonResponse login(String username, String password, HttpServletRequest request) {
+    public CommonResponse login(@RequestParam(name = "username", required = true) String username, @RequestParam(name = "password", required = true) String password, HttpServletRequest request) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authenticate);

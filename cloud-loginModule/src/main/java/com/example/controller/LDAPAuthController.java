@@ -8,10 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.naming.directory.DirContext;
 import java.util.Collections;
@@ -34,7 +31,7 @@ public class LDAPAuthController {
     private LdapContextSource contextSource;
 
     @PostMapping ("/login")
-    public CommonResponse login(String username, String password) {
+    public CommonResponse login(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password) {
         DirContext readOnlyContext = contextSource.getReadOnlyContext();
 
         Authentication authentication = ldapAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, password));
