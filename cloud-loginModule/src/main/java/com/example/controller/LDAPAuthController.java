@@ -22,7 +22,7 @@ import java.util.Map;
  * @DATE 2023/10/25 7:23
  */
 @RestController
-@RequestMapping("oss/ladp")
+@RequestMapping("oss/ldap")
 public class LDAPAuthController {
 
     @Autowired
@@ -34,10 +34,10 @@ public class LDAPAuthController {
     private LdapContextSource contextSource;
 
     @PostMapping ("/login")
-    public CommonResponse login(String userName, String password) {
+    public CommonResponse login(String username, String password) {
         DirContext readOnlyContext = contextSource.getReadOnlyContext();
 
-        Authentication authentication = ldapAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(userName, password));
+        Authentication authentication = ldapAuthenticationProvider.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         if (ObjectUtils.isEmpty(authentication)) {
             return new CommonResponse(200, "", "登录失败");
         }

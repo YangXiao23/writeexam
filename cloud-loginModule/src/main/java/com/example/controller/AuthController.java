@@ -37,8 +37,8 @@ public class AuthController {
     @Autowired
     private JWTUtil jwtUtil;
     @PostMapping("/login")
-    public CommonResponse login(String userName, String password, HttpServletRequest request) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userName, password);
+    public CommonResponse login(String username, String password, HttpServletRequest request) {
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         // 将Authentication对象存储到session中

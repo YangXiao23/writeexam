@@ -6,10 +6,8 @@ import com.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,7 +31,7 @@ public class ProductController {
 
     @PostMapping("/delete")
     @PreAuthorize("hasAnyRole('ROLE_PRODUCT_ADMIN', 'ROLE_EDITOR')")
-    public CommonResponse deleteProduct(Integer id) {
+    public CommonResponse deleteProduct(@RequestParam(name = "id", required = true) Integer id) {
         Boolean flag = productService.deleteProduct(id);
         CommonResponse response = new CommonResponse(2000, "删除成功", null);
         if (!flag) {
@@ -46,6 +44,10 @@ public class ProductController {
     @PreAuthorize("hasAnyRole('ROLE_PRODUCT_ADMIN', 'ROLE_EDITOR')")
     public CommonResponse updateProduct(Product product) {
         CommonResponse response = new CommonResponse(2000, "修改成功", null);
+        if (product.getId() == null || ObjectUtils.isEmpty(product.getName())) {
+            response.setMessage("参数不合法");
+            return response;
+        }
         Boolean flag = productService.updateProduct(product);
         if (!flag){
             response.setMessage("修改失败");
@@ -55,7 +57,7 @@ public class ProductController {
 
     @PostMapping("/add")
     @PreAuthorize("hasAnyRole('ROLE_PRODUCT_ADMIN', 'ROLE_EDITOR')")
-    public CommonResponse addProduct(String name) {
+    public CommonResponse addProduct(@RequestParam(name = "name", required = true) String name) {
         CommonResponse response = new CommonResponse(2000, "添加成功", null);
         if (ObjectUtils.isEmpty(name)) {
             response.setMessage("添加失败");
