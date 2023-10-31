@@ -1,0 +1,60 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: 1aafb9061df1438f9abe
+            client-secret: 66b0e5b52cef4c3f0388305778ec8a74c0e3e2b1
+            redirect-uri: http://localhost:7573/login/oauth2/code/github
+
+  datasource:
+    url: jdbc:mysql://mysql/test
+    username: yangxiao
+    password: yangxiao
+  application:
+    name: OSSSERVICE
+  cloud:
+    nacos:
+      discovery:
+        server-addr: mynacos:8848
+
+jwt:
+  # 密匙KEY
+  secret: ADZf3m5uMBo0MatLfiE82QQNpow5LxT09fPYtdmGm6k3dSpJADZf3m5uMBo0MatLfiE82QQNpow5LxT09fPYtdmGm6k3dSpJ
+  # HeaderKEY
+  tokenHeader: Authorization
+  # 过期时间 单位秒 1天后过期=86400 7天后过期=604800
+  expiration: 86400000
+mybatis:
+  mapper-locations: classpath:/mappers/*.xml
+  type-aliases-package: com.example.entity
+
+ldap:
+   urls: ldap://cloud-ldap:389/
+   loginusername: cn=admin,dc=myorg,dc=com
+   loginpassword: adminpassword
+   base:
+     dn: dc=myorg,dc=com
+   user:
+     dn:
+      pattern: uid={0},ou=people
+   group:
+     search:
+      base: ou=roles
+      filter: member={0}
+      roleAttribute: cn
+
+
+
+logging:
+  level:
+    org.springframework.security: debug
+
+server:
+  port: 8080
+
+
+
+
+

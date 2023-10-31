@@ -1,0 +1,27 @@
+server:
+  port: 7573
+
+spring:
+  application:
+    name: GATEWAYSEVICE
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: product
+          uri: lb://PRODUCTSERVICE
+          predicates:
+            - Path=/product/**
+        - id: oss
+          uri: lb://OSSSERVICE
+          predicates:
+            - Path=/oss/**,/oauth2/**,/login/**
+    nacos:
+      discovery:
+        server-addr: mynacos:8848
+
+
+
+

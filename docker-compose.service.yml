@@ -1,0 +1,36 @@
+version: '3'
+services:
+  cloud-gateway:
+    container_name: cloud-gatewayservice
+    build:
+      context: ./cloud-gateway/
+      dockerfile: Dockerfile
+    ports:
+      - "7573:7573"
+    networks:
+      - mynet
+
+
+  cloud-oss:
+    container_name: oss-service
+    build:
+      context: ./cloud-loginModule
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - mynet
+
+  cloud-product:
+    container_name: product-service
+    build:
+      context: ./cloud-productModule
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge

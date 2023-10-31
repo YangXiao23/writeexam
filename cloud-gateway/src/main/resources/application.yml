@@ -1,0 +1,36 @@
+server:
+  port: 7573
+
+spring:
+  application:
+    name: GATEWAYSEVICE
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: product
+          uri: lb://PRODUCTSERVICE
+          #uri: http://192.168.200.1:8090
+          predicates:
+            - Path=/product/**
+        - id: oss
+          uri: lb://OSSSERVICE
+          predicates:
+            - Path=/oss/**,/oauth2/**,/login/**
+    nacos:
+      discovery:
+        server-addr: 101.33.230.121:8848
+
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: DEBUG
+#    com:
+#      alibaba:
+#        nacos: warn
+
+
