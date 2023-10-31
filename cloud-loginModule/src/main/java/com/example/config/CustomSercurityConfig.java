@@ -122,11 +122,11 @@ public class CustomSercurityConfig {
             @Override
             public void customize(ExceptionHandlingConfigurer<HttpSecurity> httpSecurityExceptionHandlingConfigurer) {
                 httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(((request, response, authException) -> {
-                    System.out.println(authException.getMessage());
+                    String message = authException.getMessage();
                     response.setCharacterEncoding("UTF-8");
                     response.setContentType("application/json; charset=utf-8");
                     response.setContentType("text/json;charset=utf-8");
-                    CommonResponse commonResponse = new CommonResponse(5000, "登录失败", null);
+                    CommonResponse commonResponse = new CommonResponse(5000, message, null);
                     response.getWriter().write(new ObjectMapper().writeValueAsString(commonResponse));
                 }));
             }

@@ -10,8 +10,8 @@ spring:
 
   datasource:
     url: jdbc:mysql://mysql/test
-    username: yangxiao
-    password: yangxiao
+    username: root
+    password: root
   application:
     name: OSSSERVICE
   cloud:

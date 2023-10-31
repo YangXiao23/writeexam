@@ -9,28 +9,26 @@ services:
       - "7573:7573"
     networks:
       - mynet
-
+    restart: on-failure
 
   cloud-oss:
     container_name: oss-service
     build:
       context: ./cloud-loginModule
       dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
     networks:
       - mynet
+    restart: on-failure
+
 
   cloud-product:
     container_name: product-service
     build:
       context: ./cloud-productModule
       dockerfile: Dockerfile
-    ports:
-      - "8090:8090"
     networks:
       - mynet
-
+    restart: on-failure
 networks:
   mynet:
     driver: bridge
